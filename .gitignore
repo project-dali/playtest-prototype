@@ -64,3 +64,5 @@ node_modules
 secret
 _secret
 secret.*
+package-lock.json
+assets

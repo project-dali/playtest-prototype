@@ -7,13 +7,16 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    // console.log('a user connected');
+    console.log(socket)
     socket.on('chat message', function (msg) {
-        console.log('message: ' + msg);
+        io.emit('chat message', msg);
     });
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
-    });
+
+    // socket.on('disconnect', function () {
+    //     console.log('user disconnected');
+    // });
+
 });
 
 http.listen(3000, function () {

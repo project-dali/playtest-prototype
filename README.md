@@ -1,5 +1,10 @@
 # socket-test
 
+## Requirements
+
+Requires npm to install socket.io and express.
+Note: This project uses the jQuery CDN.
+
 ## Install
 
 Navigate to desired parent directory in terminal

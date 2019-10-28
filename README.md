@@ -9,7 +9,7 @@ Note: This project uses the jQuery CDN.
 
 Navigate to desired parent directory in terminal
 
-    git clone https://github.com/project-dali
+    git clone https://github.com/project-dali/socket-test.git
     npm install --save
 
 ## Test

@@ -7,9 +7,8 @@ Note: This project uses the jQuery CDN.
 
 ## Install
 
-Navigate to desired parent directory in terminal
+Clone the repo into your preferred directory, then install node depencies with:
 
-    git clone https://github.com/project-dali/socket-test.git
     npm install --save
 
 ## Test

@@ -1,4 +1,4 @@
-# socket-test
+# Playtest Prototype
 
 ## Requirements
 
@@ -14,8 +14,8 @@ Navigate to desired parent directory in terminal
 
 ## Test
 
-In the root directory of the app:
+To test on local, navigate to the root directory of the app and run:
 
     node index.js
 
-In two different tabs of a web client, go to [localhost:3000](http://localhost:3000). Type in messages and you should see them appear in both tabs.
+The app will be available on [localhost:3000](http://localhost:3000).

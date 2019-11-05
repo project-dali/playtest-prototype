@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/project-dali/socket-test.git"
+    "url": "git+https://github.com/project-dali/playtest-prototype.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/project-dali/socket-test/issues"
   },
-  "homepage": "https://github.com/project-dali/socket-test#readme",
+  "homepage": "https://github.com/project-dali/playtest-prototype#readme",
   "dependencies": {
     "express": "^4.15.2",
     "socket.io": "^2.3.0"

@@ -17,6 +17,17 @@
             socket.on('chat message', function (msg) {
                 $('#messages').append($('<li>').text(msg));
             });
+
+            // const newRoundBtn = document.querySelector('.new-round');
+            // const surveyBtn = document.querySelector('.survey');
+
+            getNewRound = () => {
+                socket.emit('new round');
+            }
+
+            sendSurvey = () => {
+                socket.emit('send survey');
+            }
         });
     </script>
     <style>
@@ -28,6 +39,22 @@
 
         body {
             font: 1rem Helvetica, Arial;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;   
+        }
+
+        nav button {
+            background: #de92ef;
+            font-size: 1rem;
+            margin: 0.5rem;
+            padding: 1rem;
+        }
+
+        nav button:nth-child(2) {
+            background: #92efde;
         }
 
         form {
@@ -50,7 +77,7 @@
             background: rgb(130, 224, 255);
             border: none;
             padding: 10px;
-        }
+        }        
 
         #messages {
             list-style-type: none;
@@ -69,6 +96,10 @@
 </head>
 
 <body>
+    <nav>
+        <button class="new-round" onclick="getNewRound();">New Round</button>
+        <button class="survey" onclick="sendSurvey();">Send Survey</button>
+    </nav>
     <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>

@@ -18,6 +18,11 @@
                 // do nothing
                 // $('#messages').append($('<li>').text(msg));
             });
+
+            const surveyButton = document.querySelector('nav a');
+            socket.on('take survey', function(){
+                surveyButton.classList.remove('hidden');
+            })
         });
     </script>
     <style>
@@ -29,6 +34,22 @@
 
         body {
             font: 1rem Helvetica, Arial;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;   
+        }
+
+        nav button {
+            background: #de92ef;
+            font-size: 1rem;
+            margin: 0.5rem;
+            padding: 1rem;
+        }
+
+        nav a.hidden {
+            display: none;
         }
 
         form {
@@ -70,6 +91,11 @@
 </head>
 
 <body>
+    <nav>
+        <a class="hidden" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <button>Take Survey</button>
+        </a>
+    </nav>
     <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>

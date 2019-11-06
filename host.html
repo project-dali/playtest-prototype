@@ -18,8 +18,16 @@
                 $('#messages').append($('<li>').text(msg));
             });
 
+            socket.emit('new game');
+            socket.emit('new round');
+
             // const newRoundBtn = document.querySelector('.new-round');
             // const surveyBtn = document.querySelector('.survey');
+
+            startNewGame = () => {
+                socket.emit('new game');
+                socket.emit('new round');
+            }
 
             getNewRound = () => {
                 socket.emit('new round');
@@ -47,13 +55,17 @@
         }
 
         nav button {
-            background: #de92ef;
+            background: #62cf3d;
             font-size: 1rem;
             margin: 0.5rem;
             padding: 1rem;
         }
 
         nav button:nth-child(2) {
+            background: #de92ef;
+        }
+
+        nav button:nth-child(3) {
             background: #92efde;
         }
 
@@ -97,6 +109,7 @@
 
 <body>
     <nav>
+        <button class="new-game" onclick="startNewGame();">New Game</button>
         <button class="new-round" onclick="getNewRound();">New Round</button>
         <button class="survey" onclick="sendSurvey();">Send Survey</button>
     </nav>

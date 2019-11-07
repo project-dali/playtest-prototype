@@ -8,7 +8,20 @@ let usedPrompts = [];
 let round = 1;
 let rndResponses = 0;
 let jsonDataGlobal = '';
+const jsonInit = {
+    "rounds": []
+}
 
+const initializeJSON = (location, data) => {
+    try {
+        // write initial file structure
+        fs.writeFileSync(location, JSON.stringify(data, null, 2));
+    } catch (err) {
+        throw err;
+    }
+}
+
+initializeJSON('data.json', jsonInit);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');

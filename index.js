@@ -18,6 +18,10 @@ app.get('/host', function (req, res) {
     res.sendFile(__dirname + '/host.html');
 });
 
+app.get('/data', function (req, res) {
+    res.sendFile(__dirname + '/data.json');
+});
+
 io.on('connection', function (socket) {
     // console.log('a user connected');
     socket.on('chat message', function (msg) {

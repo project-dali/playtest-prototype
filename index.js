@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const fs = require('fs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -34,6 +35,8 @@ app.get('/host', function (req, res) {
 app.get('/data', function (req, res) {
     res.sendFile(__dirname + '/data.json');
 });
+
+app.use(express.static('public'));
 
 io.on('connection', function (socket) {
     // console.log('a user connected');

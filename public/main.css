@@ -10,7 +10,11 @@ body {
 
 nav {
     display: flex;
-    justify-content: space-around;   
+    justify-content: space-around;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    width: 100%;   
 }
 
 nav button {

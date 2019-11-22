@@ -9,6 +9,7 @@ body {
 }
 
 nav {
+    box-shadow: 1px 1px 4px #8b909f;
     display: flex;
     justify-content: space-around;
     position: -webkit-sticky;

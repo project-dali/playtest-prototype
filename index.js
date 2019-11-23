@@ -36,7 +36,7 @@ app.get('/data', function (req, res) {
     res.sendFile(__dirname + '/data.json');
 });
 
-app.use(express.static('public'));
+app.use('/static', express.static(__dirname + '/public'));
 
 io.on('connection', function (socket) {
     // console.log('a user connected');

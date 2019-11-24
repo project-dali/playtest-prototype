@@ -19,6 +19,7 @@
   "homepage": "https://github.com/project-dali/playtest-prototype#readme",
   "dependencies": {
     "express": "^4.15.2",
+    "mysql2": "^2.0.1",
     "socket.io": "^2.3.0"
   }
 }

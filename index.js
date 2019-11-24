@@ -12,6 +12,9 @@ let jsonDataGlobal = '';
 const jsonInit = {
     "rounds": []
 }
+const db = require('./db');
+console.log(db.sqlData)
+// io.emit('chat message', db.sqlData);
 
 const initializeJSON = (location, data) => {
     try {

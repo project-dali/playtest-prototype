@@ -13,8 +13,11 @@ const jsonInit = {
     "rounds": []
 }
 const db = require('./db');
-console.log(db.sqlData)
-// io.emit('chat message', db.sqlData);
+const secret = require('./db-secret');
+
+
+let connection = db.createCon(secret.dbCredentials);
+let query = '';
 
 const initializeJSON = (location, data) => {
     try {
@@ -104,6 +107,14 @@ io.on('connection', function (socket) {
 
         let now = new Date();
         let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + round + '; prompt_id=' + i + '; prompt: ' + prompts[i];
+
+        query = `SELECT * FROM prompt
+            ORDER BY RAND()
+            LIMIT 1`;
+        db.sendQuery(query, connection, function (results) {
+            console.log(results)
+            io.emit('chat message', results[0].prompt);
+        });
 
         let roundData = {
             time: now.toISOString(),

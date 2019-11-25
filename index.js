@@ -4,9 +4,7 @@ const fs = require('fs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-let prompts = ['Schneef', 'Grass', 'Pumpkins are classified as a fruit.', 'Tart', 'TFOML', 'If there\'s a fire, I...', 'Plant Mom', 'Scurvy Dog', 'Trash Panda', 'Bold Move', 'Cereal is soup.', 'How to really keep the doctor away', 'Bad Traffic Law', 'Tuesday Night', 'Purple Thumb', 'Google Driving', 'Super Secret Storage', 'Santa', 'USPS', 'Trash Day', 'Stop Signs', 'Church of ___', 'Drexel\'s School for the ___'];
-let usedPrompts = [];
-let round = 1;
+let round = 0;
 let rndResponses = 0;
 let jsonDataGlobal = '';
 const jsonInit = {
@@ -90,63 +88,63 @@ io.on('connection', function (socket) {
     socket.on('new round', function () {
 
         rndResponses = 0;
+        // if (usedPrompts.length == 23) {
+        //     round = 1;
+        //     usedPrompts = [];
+        //     // console.log('New round started!');
+        // }
 
-        if (usedPrompts.length == 23) {
-            round = 1;
-            usedPrompts = [];
-            // console.log('New round started!');
-        }
+        // // what is this?
+        // let i = Math.floor(Math.random() * prompts.length);
 
-        let i = Math.floor(Math.random() * prompts.length);
+        // while (usedPrompts.includes(i)) {
+        //     i = Math.floor(Math.random() * prompts.length);
+        // }
 
-        while (usedPrompts.includes(i)) {
-            i = Math.floor(Math.random() * prompts.length);
-        }
-
-        usedPrompts.push(i);
-
-        let now = new Date();
-        let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + round + '; prompt_id=' + i + '; prompt: ' + prompts[i];
+        // usedPrompts.push(i);
 
         query = `SELECT * FROM prompt
-            ORDER BY RAND()
-            LIMIT 1`;
-        db.sendQuery(query, connection, function (results) {
-            console.log(results)
-            io.emit('chat message', results[0].prompt);
+        ORDER BY RAND()
+        LIMIT 1`;
+        db.sendQuery(query, connection, (results) => {
+            // console.log(results)
+            let now = new Date();
+
+            let roundData = {
+                time: now.toISOString(),
+                round: round,
+                prompt_id: results[0].id,
+                prompt: results[0].prompt,
+                responses: []
+            };
+
+            let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + roundData.round +
+                '; prompt_id=' + roundData.prompt_id + '; prompt: ' + roundData.prompt;
+
+            fs.readFile('data.json', 'utf8', function (err, currentData) {
+                if (err) throw err;
+
+                // read data.json as json object
+                jsonDataGlobal = JSON.parse(currentData);
+
+                // push new round obj to rounds arr
+                jsonDataGlobal.rounds.push(roundData);
+
+                try {
+                    // rewrite data.json with the updated global json obj
+                    fs.writeFileSync('data.json', JSON.stringify(jsonDataGlobal, null, 2));
+
+                    // console.log('The User Response was appended to the file!');
+                } catch (err) {
+                    throw err;
+                }
+            });
+
+            // console.log(responseMsg)
+            io.emit('chat message', responseMsg);
         });
-
-        let roundData = {
-            time: now.toISOString(),
-            round: round,
-            prompt_id: i,
-            prompt: prompts[i],
-            responses: []
-        };
-
-        fs.readFile('data.json', 'utf8', function (err, currentData) {
-            if (err) throw err;
-
-            // read data.json as json object
-            jsonDataGlobal = JSON.parse(currentData);
-
-            // push new round obj to rounds arr
-            jsonDataGlobal.rounds.push(roundData);
-
-            try {
-                // rewrite data.json with the updated global json obj
-                fs.writeFileSync('data.json', JSON.stringify(jsonDataGlobal, null, 2));
-
-                // console.log('The User Response was appended to the file!');
-            } catch (err) {
-                throw err;
-            }
-        });
-
-        // console.log(responseMsg)
-        io.emit('chat message', responseMsg);
-
         round++;
+
     });
 
     socket.on('send survey', function () {
